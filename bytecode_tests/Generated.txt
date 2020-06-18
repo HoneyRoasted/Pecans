@@ -1,0 +1,71 @@
+// class version 58.0 (58)
+// access flags 0x1
+// signature Ljava/lang/Object;
+// declaration: Generated
+public class Generated {
+
+
+  // access flags 0x1
+  // signature Ljava/lang/String;
+  // declaration: myString extends java.lang.String
+  public Ljava/lang/String; myString
+
+  // access flags 0x1
+  // signature (Ljava/lang/String;)V
+  // declaration: void <init>(java.lang.String)
+  public <init>(Ljava/lang/String;)V
+    // parameter  myString
+   L0
+    ALOAD 0
+    INVOKESPECIAL java/lang/Object.<init> ()V
+    ALOAD 0
+    ALOAD 1
+    PUTFIELD Generated.myString : Ljava/lang/String;
+   L1
+    ICONST_1
+    ISTORE 2
+   L2
+    ILOAD 2
+    IFNE L3
+    ILOAD 2
+    IFNE L3
+    ICONST_0
+    GOTO L4
+   L3
+   FRAME FULL [Generated java/lang/String I] []
+    ICONST_1
+   L4
+   FRAME FULL [Generated java/lang/String I] [I]
+    ISTORE 3
+    RETURN
+   L5
+    LOCALVARIABLE this LGenerated; L0 L5 0
+    // signature LGenerated;
+    // declaration: this extends Generated
+    LOCALVARIABLE myString Ljava/lang/String; L0 L5 1
+    // signature Ljava/lang/String;
+    // declaration: myString extends java.lang.String
+    LOCALVARIABLE a Z L1 L5 2
+    // signature Z
+    // declaration: aboolean
+    LOCALVARIABLE probs_broke Z L2 L5 3
+    // signature Z
+    // declaration: probs_brokeboolean
+    MAXSTACK = 2
+    MAXLOCALS = 4
+
+  // access flags 0x1
+  // signature ()Ljava/lang/Object;
+  // declaration:  getValue()
+  public getValue()Ljava/lang/Object;
+   L0
+    ALOAD 0
+    GETFIELD Generated.myString : Ljava/lang/String;
+    ARETURN
+   L1
+    LOCALVARIABLE this LGenerated; L0 L1 0
+    // signature LGenerated;
+    // declaration: this extends Generated
+    MAXSTACK = 1
+    MAXLOCALS = 1
+}
