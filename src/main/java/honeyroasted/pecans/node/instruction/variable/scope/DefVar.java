@@ -23,12 +23,12 @@ public class DefVar implements Node {
     public void accept(InstructionAdapter adapter, Context context) {
         VariableScope.Var var = context.scope().getVar(name);
 
-        this.value.accept(adapter, context);
-        adapter.store(var.getIndex(), Type.getType(var.getType().writeDesc()));
-
         Label label = new Label();
         adapter.mark(label);
         var.setStart(label);
+
+        this.value.accept(adapter, context);
+        adapter.store(var.getIndex(), Type.getType(var.getType().writeDesc()));
 
         var.accept(this, adapter);
     }

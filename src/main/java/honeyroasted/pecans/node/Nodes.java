@@ -15,8 +15,10 @@ import honeyroasted.pecans.node.instruction.operator.RightShift;
 import honeyroasted.pecans.node.instruction.operator.Subtract;
 import honeyroasted.pecans.node.instruction.operator.Ternary;
 import honeyroasted.pecans.node.instruction.operator.UnsignedRightShift;
+import honeyroasted.pecans.node.instruction.operator.bool.And;
 import honeyroasted.pecans.node.instruction.operator.bool.InstanceOf;
 import honeyroasted.pecans.node.instruction.operator.bool.Not;
+import honeyroasted.pecans.node.instruction.operator.bool.Or;
 import honeyroasted.pecans.node.instruction.util.LazyTypedNode;
 import honeyroasted.pecans.node.instruction.Return;
 import honeyroasted.pecans.node.instruction.TypedNode;
@@ -303,6 +305,13 @@ public interface Nodes {
         return new InstanceOf(val, type);
     }
 
+    static TypedNode and(TypedNode left, TypedNode right) {
+        return new And(left, right);
+    }
+
+    static TypedNode or(TypedNode left, TypedNode right) {
+        return new Or(left, right);
+    }
 
     static TypedNode add(TypedNode left, TypedNode right) {
         return new Add(left, right);

@@ -29,13 +29,8 @@ public class Test {
                         .body(sequence(
                                 invokeSpecial(type(Object.class), loadThis(), "<init>", methodSignature(VOID)),
                                 set(loadThis(), "myString", get("myString")),
-                                def("a", add(constant(2.0), div(constant(1.0), add(constant(1), constant(5))))),
-                                def("b", constant(4)),
-                                def("c", not(equal(get("a"), get("b")))),
-                                def("d", constant("hello")),
-                                invokeVirtual(get(type(System.class), "out", type(PrintStream.class)), "println", methodSignature(VOID)),
-                                tryCatch(def("g", constant(false)), type(RuntimeException.class), "ex", def("faefa", constant("hello"))),
-                                def("yeet", constant(false)),
+                                def("a", constant(true)),
+                                def("probs_broke", or(get("a"), get("a"))),
                                 ret())))
                 .add(method(ACC_PUBLIC, "getValue", methodSignature(OBJECT), ret(get(loadThis(), "myString", type(String.class)))));
 
