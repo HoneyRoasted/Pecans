@@ -1,15 +1,16 @@
-import honeyroasted.pecans.ast.ClassNode;
-import honeyroasted.pecans.ast.instruction.operator.Compare;
-import honeyroasted.pecans.ast.instruction.operator.ComparisonOperator;
-import honeyroasted.pecans.signature.type.TypeParameterized;
+import honeyroasted.pecans.node.ClassNode;
+import honeyroasted.pecans.node.instruction.operator.Compare;
+import honeyroasted.pecans.node.instruction.operator.ComparisonOperator;
+import honeyroasted.pecans.type.type.TypeParameterized;
 import honeyroasted.pecans.util.ByteArrayClassLoader;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Paths;
 
-import static honeyroasted.pecans.ast.Nodes.*;
-import static honeyroasted.pecans.signature.Types.*;
+import static honeyroasted.pecans.node.Nodes.*;
+import static honeyroasted.pecans.type.Types.*;
 
 public class Test {
 
@@ -22,11 +23,15 @@ public class Test {
                 .add(method(ACC_PUBLIC, "<init>", methodSignature(VOID))
                         .param("myString", type(String.class))
                         .body(sequence(
-                                invokeSpecial(type(Object.class), loadThis(clsType), "<init>", methodSignature(VOID)),
-                                set(loadThis(clsType), "myString", get(1, type(String.class))),
-                                set(2, new Compare(ComparisonOperator.LESS_THAN, constant(12), constant(31))),
+                                invokeSpecial(type(Object.class), loadThis(), "<init>", methodSignature(VOID)),
+                                set(loadThis(), "myString", get("myString")),
+                                def("a", constant(2.0d)),
+                                def("b", constant(4)),
+                                def("c", not(equal(get("a"), get("b")))),
+                                def("d", constant("hello")),
+                                invokeVirtual(get(type(System.class), "out", type(PrintStream.class)), "println", methodSignature(VOID)),
                                 ret())))
-                .add(method(ACC_PUBLIC, "getValue", methodSignature(OBJECT), ret(get(loadThis(clsType), "myString", type(String.class)))));
+                .add(method(ACC_PUBLIC, "getValue", methodSignature(OBJECT), ret(get(loadThis(), "myString", type(String.class)))));
 
         node.writeIn(Paths.get(""));
 
