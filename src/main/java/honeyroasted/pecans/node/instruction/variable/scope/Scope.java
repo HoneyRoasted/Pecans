@@ -7,6 +7,7 @@ import org.objectweb.asm.commons.InstructionAdapter;
 
 public class Scope implements Node {
     private Node node;
+    private VariableScope scope;
 
     public Scope(Node node) {
         this.node = node;
@@ -14,7 +15,6 @@ public class Scope implements Node {
 
     @Override
     public void accept(InstructionAdapter adapter, Context context) {
-        VariableScope scope = context.scope().newChild();
         this.node.accept(adapter, new Context(context.classNode(), context.methodNode(), scope));
 
         Label end = new Label();
@@ -24,6 +24,7 @@ public class Scope implements Node {
 
     @Override
     public void preprocess(Context context) {
-        this.node.preprocess(context);
+        this.scope = context.scope().newChild();
+        this.node.preprocess(new Context(context.classNode(), context.methodNode(), scope));
     }
 }

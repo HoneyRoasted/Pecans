@@ -26,13 +26,14 @@ public class VariableScope {
         this.variables = new LinkedHashMap<>();
     }
 
-    private VariableScope(VariableScope parent) {
-        this();
+    private VariableScope(VariableScope parent, IndexTracker tracker) {
+        this.tracker = tracker;
+        this.variables = new LinkedHashMap<>();
         this.parent = parent;
     }
 
     public VariableScope newChild() {
-        VariableScope s = new VariableScope(this);
+        VariableScope s = new VariableScope(this, this.tracker);
         this.children.add(s);
         return s;
     }
@@ -71,6 +72,8 @@ public class VariableScope {
     }
 
     public static class Var {
+        private boolean visited = false;
+
         private String name;
         private TypeInformal type;
         private int index;
@@ -129,7 +132,10 @@ public class VariableScope {
         }
 
         public void accept(InstructionAdapter adapter, Label end) {
-            adapter.visitLocalVariable(this.name, this.type.writeDesc(), this.type.write(), this.start, end, this.index);
+            if (!visited) {
+                adapter.visitLocalVariable(this.name, this.type.writeDesc(), this.type.write(), this.start, end, this.index);
+                visited = true;
+            }
         }
     }
 

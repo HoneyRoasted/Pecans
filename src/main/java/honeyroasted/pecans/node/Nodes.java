@@ -1,6 +1,7 @@
 package honeyroasted.pecans.node;
 
 import honeyroasted.pecans.node.instruction.Composition;
+import honeyroasted.pecans.node.instruction.block.TryCatch;
 import honeyroasted.pecans.node.instruction.operator.Add;
 import honeyroasted.pecans.node.instruction.operator.BitwiseAnd;
 import honeyroasted.pecans.node.instruction.operator.BitwiseOr;
@@ -25,6 +26,7 @@ import honeyroasted.pecans.node.instruction.invocation.InvokeSpecial;
 import honeyroasted.pecans.node.instruction.util.SkipPreprocTypedNode;
 import honeyroasted.pecans.node.instruction.variable.scope.DefVar;
 import honeyroasted.pecans.node.instruction.variable.scope.GetVar;
+import honeyroasted.pecans.node.instruction.variable.scope.Scope;
 import honeyroasted.pecans.node.instruction.variable.scope.SetVar;
 import honeyroasted.pecans.type.ClassSignature;
 import honeyroasted.pecans.type.MethodSignature;
@@ -204,6 +206,14 @@ public interface Nodes {
 
     static For forLoop(Node begin, TypedNode condition, Node action, Node body) {
         return new For(begin, condition, action, body);
+    }
+
+    static TryCatch tryCatch(Node body, TypeInformal type, String var, Node handler) {
+        return new TryCatch(body, type, var, handler);
+    }
+
+    static Scope scope(Node body) {
+        return new Scope(body);
     }
 
     static New newObj(TypeInformal type, MethodSignature signature) {
