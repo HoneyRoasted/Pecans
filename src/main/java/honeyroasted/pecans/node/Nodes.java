@@ -1,7 +1,21 @@
 package honeyroasted.pecans.node;
 
 import honeyroasted.pecans.node.instruction.Composition;
-import honeyroasted.pecans.node.instruction.operator.Not;
+import honeyroasted.pecans.node.instruction.operator.Add;
+import honeyroasted.pecans.node.instruction.operator.BitwiseAnd;
+import honeyroasted.pecans.node.instruction.operator.BitwiseOr;
+import honeyroasted.pecans.node.instruction.operator.BitwiseXor;
+import honeyroasted.pecans.node.instruction.operator.Divide;
+import honeyroasted.pecans.node.instruction.operator.LeftShift;
+import honeyroasted.pecans.node.instruction.operator.Mod;
+import honeyroasted.pecans.node.instruction.operator.Multiply;
+import honeyroasted.pecans.node.instruction.operator.Negate;
+import honeyroasted.pecans.node.instruction.operator.RightShift;
+import honeyroasted.pecans.node.instruction.operator.Subtract;
+import honeyroasted.pecans.node.instruction.operator.Ternary;
+import honeyroasted.pecans.node.instruction.operator.UnsignedRightShift;
+import honeyroasted.pecans.node.instruction.operator.bool.InstanceOf;
+import honeyroasted.pecans.node.instruction.operator.bool.Not;
 import honeyroasted.pecans.node.instruction.util.LazyTypedNode;
 import honeyroasted.pecans.node.instruction.Return;
 import honeyroasted.pecans.node.instruction.TypedNode;
@@ -28,8 +42,8 @@ import honeyroasted.pecans.node.instruction.conversion.CheckCast;
 import honeyroasted.pecans.node.instruction.conversion.PrimitiveCast;
 import honeyroasted.pecans.node.instruction.invocation.InvokeStatic;
 import honeyroasted.pecans.node.instruction.invocation.New;
-import honeyroasted.pecans.node.instruction.operator.Compare;
-import honeyroasted.pecans.node.instruction.operator.ComparisonOperator;
+import honeyroasted.pecans.node.instruction.operator.bool.Compare;
+import honeyroasted.pecans.node.instruction.operator.bool.ComparisonOperator;
 import honeyroasted.pecans.node.instruction.variable.GetField;
 import honeyroasted.pecans.node.instruction.variable.GetLocal;
 import honeyroasted.pecans.node.instruction.variable.GetStatic;
@@ -273,6 +287,67 @@ public interface Nodes {
 
     static TypedNode not(TypedNode val) {
         return new Not(val);
+    }
+
+    static TypedNode instanceOf(TypedNode val, TypeInformal type) {
+        return new InstanceOf(val, type);
+    }
+
+
+    static TypedNode add(TypedNode left, TypedNode right) {
+        return new Add(left, right);
+    }
+
+    static TypedNode sub(TypedNode left, TypedNode right) {
+        return new Subtract(left, right);
+    }
+
+    static TypedNode mul(TypedNode left, TypedNode right) {
+        return new Multiply(left, right);
+    }
+
+    static TypedNode div(TypedNode left, TypedNode right) {
+        return new Divide(left, right);
+    }
+
+    static TypedNode mod(TypedNode left, TypedNode right) {
+        return new Mod(left, right);
+    }
+
+    static TypedNode neg(TypedNode val) {
+        return new Negate(val);
+    }
+
+    static TypedNode lshift(TypedNode val, TypedNode shift) {
+        return new LeftShift(val, shift);
+    }
+
+    static TypedNode rshift(TypedNode val, TypedNode shift) {
+        return new RightShift(val, shift);
+    }
+
+    static TypedNode urshift(TypedNode val, TypedNode shift) {
+        return new UnsignedRightShift(val, shift);
+    }
+
+    static TypedNode band(TypedNode left, TypedNode right) {
+        return new BitwiseAnd(left, right);
+    }
+
+    static TypedNode bor(TypedNode left, TypedNode right) {
+        return new BitwiseOr(left, right);
+    }
+
+    static TypedNode bxor(TypedNode left, TypedNode right) {
+        return new BitwiseXor(left, right);
+    }
+
+    static TypedNode bnegate(TypedNode val) {
+        return bxor(val, constant(-1));
+    }
+
+    static TypedNode ternary(TypedNode cond, TypedNode ifTrue, TypedNode ifFalse) {
+        return new Ternary(cond, ifTrue, ifFalse);
     }
 
 }

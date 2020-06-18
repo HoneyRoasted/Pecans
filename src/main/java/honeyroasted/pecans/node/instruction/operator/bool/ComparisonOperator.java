@@ -1,11 +1,11 @@
-package honeyroasted.pecans.node.instruction.operator;
+package honeyroasted.pecans.node.instruction.operator.bool;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.commons.InstructionAdapter;
 
 public interface ComparisonOperator {
 
-    ComparisonOperator EQUALS = new EqualOperator();
+    ComparisonOperator EQUALS = new Equal();
 
     ComparisonOperator LESS_THAN = new LessThan();
     ComparisonOperator LESS_THAN_OR_EQUAL = new LessThanOrEqual();

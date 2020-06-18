@@ -1,11 +1,9 @@
 package honeyroasted.pecans.node.instruction.block;
 
-import honeyroasted.pecans.node.ClassNode;
 import honeyroasted.pecans.node.Context;
-import honeyroasted.pecans.node.MethodNode;
 import honeyroasted.pecans.node.instruction.Node;
 import honeyroasted.pecans.node.instruction.TypedNode;
-import honeyroasted.pecans.node.instruction.operator.BooleanOperator;
+import honeyroasted.pecans.node.instruction.operator.bool.BooleanOperator;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.commons.InstructionAdapter;
 

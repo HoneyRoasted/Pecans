@@ -1,6 +1,4 @@
 import honeyroasted.pecans.node.ClassNode;
-import honeyroasted.pecans.node.instruction.operator.Compare;
-import honeyroasted.pecans.node.instruction.operator.ComparisonOperator;
 import honeyroasted.pecans.type.type.TypeParameterized;
 import honeyroasted.pecans.util.ByteArrayClassLoader;
 

@@ -1,4 +1,4 @@
-package honeyroasted.pecans.node.instruction.operator;
+package honeyroasted.pecans.node.instruction.operator.bool;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.commons.InstructionAdapter;

@@ -72,13 +72,10 @@ public interface Types extends Opcodes {
         if (a.isPrimitive() && b.isPrimitive()) {
             if (a.equals(DOUBLE) || b.equals(DOUBLE)) {
                 return DOUBLE;
-            } else if ((a.equals(FLOAT) && b.equals(LONG))
-                    || (a.equals(LONG) && b.equals(FLOAT))) {
-                return DOUBLE;
+            }  else if (a.equals(FLOAT) || b.equals(FLOAT)) {
+                return FLOAT;
             } else if (a.equals(LONG) || b.equals(LONG)) {
                 return LONG;
-            } else if (a.equals(FLOAT) || b.equals(FLOAT)) {
-                return FLOAT;
             } else if (a.equals(INT) || b.equals(INT)) {
                 return INT;
             } else if (a.equals(SHORT) || b.equals(SHORT)) {

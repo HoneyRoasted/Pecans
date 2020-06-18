@@ -1,9 +1,9 @@
-package honeyroasted.pecans.node.instruction.operator;
+package honeyroasted.pecans.node.instruction.operator.bool;
 
 import honeyroasted.pecans.node.Context;
 import honeyroasted.pecans.node.Nodes;
 import honeyroasted.pecans.node.instruction.TypedNode;
-import honeyroasted.pecans.node.instruction.util.SkipPreprocTypedNode;
+import honeyroasted.pecans.node.instruction.operator.BinaryOperator;
 import honeyroasted.pecans.type.Types;
 import honeyroasted.pecans.type.type.TypeInformal;
 import org.objectweb.asm.Label;
@@ -11,15 +11,12 @@ import org.objectweb.asm.commons.InstructionAdapter;
 
 import static honeyroasted.pecans.type.Types.*;
 
-public class Compare implements BooleanOperator {
+public class Compare extends BinaryOperator implements BooleanOperator {
     private ComparisonOperator operator;
-    private TypedNode left;
-    private TypedNode right;
 
     public Compare(ComparisonOperator operator, TypedNode left, TypedNode right) {
+        super(left, right);
         this.operator = operator;
-        this.left = left;
-        this.right = right;
     }
 
     @Override
@@ -142,16 +139,5 @@ public class Compare implements BooleanOperator {
         }
     }
 
-    @Override
-    public void preprocess(Context context) {
-        this.left.preprocess(context);
-        this.right.preprocess(context);
 
-        TypeInformal wide = Types.widest(left.type(context), right.type(context));
-        this.left = Nodes.convert(wide, new SkipPreprocTypedNode(this.left));
-        this.right = Nodes.convert(wide, new SkipPreprocTypedNode(this.right));
-
-        this.left.preprocess(context);
-        this.right.preprocess(context);
-    }
 }

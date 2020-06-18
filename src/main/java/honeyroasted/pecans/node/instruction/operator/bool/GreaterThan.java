@@ -1,15 +1,15 @@
-package honeyroasted.pecans.node.instruction.operator;
+package honeyroasted.pecans.node.instruction.operator.bool;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.commons.InstructionAdapter;
 
 import static org.objectweb.asm.Opcodes.*;
 
-public class EqualOperator implements ComparisonOperator {
+public class GreaterThan implements ComparisonOperator {
 
     @Override
     public void visitDoubleCompare(InstructionAdapter adapter) {
-        adapter.visitInsn(DCMPL);
+        adapter.visitInsn(DCMPG);
     }
 
     @Override
@@ -19,7 +19,7 @@ public class EqualOperator implements ComparisonOperator {
 
     @Override
     public void visitFloatCompare(InstructionAdapter adapter) {
-        adapter.visitInsn(FCMPL);
+        adapter.visitInsn(FCMPG);
     }
 
     @Override
@@ -29,22 +29,22 @@ public class EqualOperator implements ComparisonOperator {
 
     @Override
     public void visitCompareJump(InstructionAdapter adapter, Label label) {
-        adapter.ifeq(label);
+        adapter.ifgt(label);
     }
 
     @Override
     public void visitInverseCompareJump(InstructionAdapter adapter, Label label) {
-        adapter.ifne(label);
+        adapter.ifle(label);
     }
 
     @Override
     public void visitIntCompare(InstructionAdapter adapter, Label label) {
-        adapter.ificmpeq(label);
+        adapter.ificmpgt(label);
     }
 
     @Override
     public void visitInverseIntCompare(InstructionAdapter adapter, Label label) {
-        adapter.ificmpne(label);
+        adapter.ificmple(label);
     }
 
 }

@@ -1,4 +1,4 @@
-package honeyroasted.pecans.node.instruction.operator;
+package honeyroasted.pecans.node.instruction.operator.bool;
 
 import honeyroasted.pecans.node.Context;
 import honeyroasted.pecans.node.Nodes;
