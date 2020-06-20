@@ -1,6 +1,10 @@
 package honeyroasted.pecans.node;
 
 import honeyroasted.pecans.node.instruction.Composition;
+import honeyroasted.pecans.node.instruction.block.Break;
+import honeyroasted.pecans.node.instruction.block.Continue;
+import honeyroasted.pecans.node.instruction.block.Goto;
+import honeyroasted.pecans.node.instruction.block.Mark;
 import honeyroasted.pecans.node.instruction.block.TryCatch;
 import honeyroasted.pecans.node.instruction.operator.Add;
 import honeyroasted.pecans.node.instruction.operator.BitwiseAnd;
@@ -54,6 +58,7 @@ import honeyroasted.pecans.node.instruction.variable.GetStatic;
 import honeyroasted.pecans.node.instruction.variable.PutField;
 import honeyroasted.pecans.node.instruction.variable.PutLocal;
 import honeyroasted.pecans.node.instruction.variable.PutStatic;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
@@ -199,19 +204,55 @@ public interface Nodes {
     }
 
     static While whileLoop(TypedNode condition, Node body) {
-        return new While(condition, body);
+        return new While(null, condition, body);
     }
 
     static DoWhile doWhileLoop(TypedNode condition, Node body) {
-        return new DoWhile(condition, body);
+        return new DoWhile(null, condition, body);
     }
 
     static For forLoop(Node begin, TypedNode condition, Node action, Node body) {
-        return new For(begin, condition, action, body);
+        return new For(null, begin, condition, action, body);
+    }
+
+    static While whileLoop(String name, TypedNode condition, Node body) {
+        return new While(name, condition, body);
+    }
+
+    static DoWhile doWhileLoop(String name, TypedNode condition, Node body) {
+        return new DoWhile(name, condition, body);
+    }
+
+    static For forLoop(String name, Node begin, TypedNode condition, Node action, Node body) {
+        return new For(name, begin, condition, action, body);
     }
 
     static TryCatch tryCatch(Node body, TypeInformal type, String var, Node handler) {
         return new TryCatch(body, type, var, handler);
+    }
+
+    static Mark mark(String label) {
+        return new Mark(label);
+    }
+
+    static Goto gotoLabel(String label) {
+        return new Goto(label);
+    }
+
+    static Break breakLoop(String name) {
+        return new Break(name);
+    }
+
+    static Break breakLoop() {
+        return new Break(null);
+    }
+
+    static Continue continueLoop(String name) {
+        return new Continue(name);
+    }
+
+    static Continue continueLoop() {
+        return new Continue(null);
     }
 
     static Scope scope(Node body) {

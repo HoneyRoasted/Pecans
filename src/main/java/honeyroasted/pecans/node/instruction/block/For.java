@@ -7,13 +7,15 @@ import org.objectweb.asm.Label;
 import org.objectweb.asm.commons.InstructionAdapter;
 
 public class For implements Node {
+    private String name;
     private Node begin;
     private TypedNode condition;
     private Node action;
 
     private Node body;
 
-    public For(Node begin, TypedNode condition, Node action, Node body) {
+    public For(String name, Node begin, TypedNode condition, Node action, Node body) {
+        this.name = name;
         this.begin = begin;
         this.condition = condition;
         this.action = action;
@@ -22,12 +24,15 @@ public class For implements Node {
 
     @Override
     public void accept(InstructionAdapter adapter, Context context) {
+        Label start = new Label();
+        Label end = new Label();
+
+        context = context.withBreak(end).withContinue(end);
+        context.setName(this.name);
+
         if (this.begin != null) {
             this.begin.accept(adapter, context);
         }
-
-        Label start = new Label();
-        Label end = new Label();
         adapter.mark(start);
 
         if (this.condition != null) {
