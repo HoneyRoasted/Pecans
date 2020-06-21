@@ -73,8 +73,9 @@ public class TypeParameterized implements TypeSignaturePart {
      *
      * @param var The formal type parameter to add.
      */
-    public void addParameter(TypeVar var) {
+    public TypeParameterized addParameter(TypeVar var) {
         this.paras.add(var);
+        return this;
     }
 
     public TypeFill asFill() {

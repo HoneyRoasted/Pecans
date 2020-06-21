@@ -74,8 +74,9 @@ public class TypeFill implements TypeInformal {
      *
      * @param part The filled type parameter to add.
      */
-    public void addPart(TypeInformal part) {
+    public TypeFill addPart(TypeInformal part) {
         this.fill.add(part);
+        return this;
     }
 
     /**
