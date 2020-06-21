@@ -3,6 +3,7 @@ package honeyroasted.pecans.node.instruction;
 import honeyroasted.pecans.node.Context;
 import org.objectweb.asm.commons.InstructionAdapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -14,7 +15,7 @@ public class Sequence implements Node {
     }
 
     public static Sequence of(Node... nodes) {
-        return new Sequence(Arrays.asList(nodes));
+        return new Sequence(new ArrayList<>(Arrays.asList(nodes)));
     }
 
     public static Sequence of(Collection<Node> nodes) {
