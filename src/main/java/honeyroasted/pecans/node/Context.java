@@ -19,7 +19,7 @@ public class Context {
 
     private Map<String, Label> labels;
 
-    private Context(Context parent, String name, Label breakLabel, Label continueLabel, ClassNode classNode, MethodNode methodNode, VariableScope scope) {
+    public Context(Context parent, String name, Label breakLabel, Label continueLabel, ClassNode classNode, MethodNode methodNode, VariableScope scope) {
         this.name = name;
         this.parent = parent;
         this.classNode = classNode;
@@ -89,7 +89,11 @@ public class Context {
     }
 
     public Context withChildScope() {
-        return new Context(this, null, this.breakLabel, this.continueLabel, this.classNode, this.methodNode, this.scope.newChild());
+        return this.withChildScope(this.scope.newChild());
+    }
+
+    public Context withChildScope(VariableScope scope) {
+        return new Context(this, this.name, this.breakLabel, this.continueLabel, this.classNode, this.methodNode, scope);
     }
 
 }

@@ -94,7 +94,7 @@ public class MethodNode {
         }));
 
         if (this.node != null) {
-            Context context = new Context(node, this, new VariableScope());
+            Context context = new Context(null, null, null, null, node, this, new VariableScope());
 
             Label start = new Label();
             method.mark(start);

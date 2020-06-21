@@ -15,7 +15,7 @@ public class Scope implements Node {
 
     @Override
     public void accept(InstructionAdapter adapter, Context context) {
-        this.node.accept(adapter, new Context(context.classNode(), context.methodNode(), scope));
+        this.node.accept(adapter, context.withChildScope(this.scope));
 
         Label end = new Label();
         adapter.mark(end);
@@ -25,6 +25,6 @@ public class Scope implements Node {
     @Override
     public void preprocess(Context context) {
         this.scope = context.scope().newChild();
-        this.node.preprocess(new Context(context.classNode(), context.methodNode(), scope));
+        this.node.preprocess(context.withChildScope(this.scope));
     }
 }
