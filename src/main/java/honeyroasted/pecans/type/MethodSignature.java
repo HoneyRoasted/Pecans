@@ -128,8 +128,9 @@ public class MethodSignature {
      *
      * @param gen The formal type parameter to add to this method signature.
      */
-    public void addGeneric(TypeVar gen) {
+    public MethodSignature addGeneric(TypeVar gen) {
         this.generics.add(gen);
+        return this;
     }
 
 
@@ -138,8 +139,9 @@ public class MethodSignature {
      *
      * @param para The parameter to add.
      */
-    public void addParameter(TypeInformal para) {
+    public MethodSignature addParameter(TypeInformal para) {
         this.paras.add(para);
+        return this;
     }
 
     /**
@@ -147,8 +149,9 @@ public class MethodSignature {
      *
      * @param except The exception to add.
      */
-    public void addException(TypeInformal except) {
+    public MethodSignature addException(TypeInformal except) {
         this.exceptions.add(except);
+        return this;
     }
 
     @Override

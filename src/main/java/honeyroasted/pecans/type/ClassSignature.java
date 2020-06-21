@@ -119,8 +119,9 @@ public class ClassSignature {
      *
      * @param superclass The new superclass.
      */
-    public void setSuperclass(TypeFill superclass) {
+    public ClassSignature setSuperclass(TypeFill superclass) {
         this.superclass = superclass;
+        return this;
     }
 
     /**
@@ -135,8 +136,9 @@ public class ClassSignature {
      *
      * @param inter The interface to add to this class signature.
      */
-    public void addInterface(TypeFill inter) {
+    public ClassSignature addInterface(TypeFill inter) {
         this.interfaces.add(inter);
+        return this;
     }
 
     @Override
