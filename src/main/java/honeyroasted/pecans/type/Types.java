@@ -44,6 +44,8 @@ public interface Types extends Opcodes {
     TypeInformal CHAR = type(char.class);
     TypeInformal CHAR_BOX = type(Character.class);
 
+    TypeInformal STRING = type(String.class);
+
     TypeInformal VOID = type(void.class);
 
     Map<TypeInformal, TypeInformal> PRIMITIVE_TO_BOX = Collections.unmodifiableMap(new LinkedHashMap<>() {{
