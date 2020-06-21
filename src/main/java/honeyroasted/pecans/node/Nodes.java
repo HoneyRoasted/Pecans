@@ -1,6 +1,7 @@
 package honeyroasted.pecans.node;
 
 import honeyroasted.pecans.node.instruction.Composition;
+import honeyroasted.pecans.node.instruction.Throw;
 import honeyroasted.pecans.node.instruction.block.Break;
 import honeyroasted.pecans.node.instruction.block.Continue;
 import honeyroasted.pecans.node.instruction.block.Goto;
@@ -408,6 +409,10 @@ public interface Nodes {
 
     static TypedNode ternary(TypedNode cond, TypedNode ifTrue, TypedNode ifFalse) {
         return new Ternary(cond, ifTrue, ifFalse);
+    }
+
+    static Throw throwEx(TypedNode ex) {
+        return new Throw(ex);
     }
 
 }
