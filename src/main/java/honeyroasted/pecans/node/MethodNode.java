@@ -41,8 +41,8 @@ public class MethodNode {
         this.annotations = annotations;
         this.params = new LinkedHashMap<>();
         this.parameterAnnotations = new LinkedHashMap<>();
-        this.paramIndices = new HashMap<>();
-        this.paramTypes = new HashMap<>();
+        this.paramIndices = new LinkedHashMap<>();
+        this.paramTypes = new LinkedHashMap<>();
     }
 
     public static MethodNode of(int modifiers, String name, MethodSignature signature) {
