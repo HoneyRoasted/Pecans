@@ -81,7 +81,7 @@ public class MethodNode {
     }
 
     public InstructionAdapter accept(ClassVisitor writer, ClassNode node) {
-        InstructionAdapter method = new InstructionAdapter(writer.visitMethod(this.modifiers, this.name, this.signature.writeDesc(), this.signature.write(), this.signature.getExceptions().stream().map(TypeSignaturePart::writeDesc).toArray(java.lang.String[]::new)));
+        InstructionAdapter method = new InstructionAdapter(writer.visitMethod(this.modifiers, this.name, this.signature.writeDesc(), this.signature.write(), this.signature.getExceptions().stream().map(TypeSignaturePart::writeInternalName).toArray(java.lang.String[]::new)));
 
         for (AnnotationNode annotation : annotations) {
             annotation.accept(method.visitAnnotation(annotation.getAnnotation().writeDesc(), annotation.isVisible()));
