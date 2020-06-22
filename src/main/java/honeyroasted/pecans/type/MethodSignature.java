@@ -73,7 +73,7 @@ public class MethodSignature {
         this.paras.forEach(t -> builder.append(t.write()));
         builder.append(")");
         builder.append(this.ret.write());
-        this.exceptions.forEach(t -> builder.append("^").append(t.write()));
+        this.exceptions.forEach(t -> builder.append("^").append(t.writeInternalName()));
         return builder.toString();
     }
 
