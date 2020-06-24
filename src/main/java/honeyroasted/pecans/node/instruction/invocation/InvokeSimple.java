@@ -1,24 +1,26 @@
 package honeyroasted.pecans.node.instruction.invocation;
 
 import honeyroasted.pecans.node.Context;
-import honeyroasted.pecans.node.instruction.TypedNode;
 import honeyroasted.pecans.type.MethodSignature;
-import honeyroasted.pecans.type.type.TypeFill;
 import honeyroasted.pecans.type.type.TypeInformal;
+import honeyroasted.pecans.node.instruction.TypedNode;
 import org.objectweb.asm.commons.InstructionAdapter;
 
 import java.util.Collection;
 import java.util.Collections;
 
-public class InvokeStatic implements Invoke {
-    private TypeFill target;
+public class InvokeSimple implements Invoke {
+    private int opcode;
+
+    private TypedNode target;
     private Collection<TypedNode> params;
 
     private String name;
     private MethodSignature signature;
     private boolean isInterface;
 
-    public InvokeStatic(TypeFill target, Collection<TypedNode> params, String name, MethodSignature signature, boolean isInterface) {
+    public InvokeSimple(int opcode, TypedNode target, Collection<TypedNode> params, String name, MethodSignature signature, boolean isInterface) {
+        this.opcode = opcode;
         this.target = target;
         this.params = params;
         this.name = name;
@@ -38,12 +40,15 @@ public class InvokeStatic implements Invoke {
 
     @Override
     public void accept(InstructionAdapter adapter, Context context) {
+        this.target.accept(adapter, context);
         this.params.forEach(t -> t.accept(adapter, context));
-        adapter.invokestatic(this.target.writeInternalName(), this.name, this.signature.writeDesc(), this.isInterface);
+
+        adapter.visitMethodInsn(this.opcode, this.target.type(context).writeInternalName(), this.name, this.signature.writeDesc(), this.isInterface);
     }
 
     @Override
     public void preprocess(Context context) {
+        this.target.preprocess(context);
         this.params.forEach(n -> n.preprocess(context));
     }
 

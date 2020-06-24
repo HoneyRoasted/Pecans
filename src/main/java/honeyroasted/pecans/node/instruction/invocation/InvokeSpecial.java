@@ -10,7 +10,7 @@ import org.objectweb.asm.commons.InstructionAdapter;
 import java.util.Collection;
 import java.util.Collections;
 
-public class InvokeSpecial implements TypedNode {
+public class InvokeSpecial implements Invoke {
     private TypeFill owner;
     private TypedNode target;
     private Collection<TypedNode> params;
@@ -28,13 +28,8 @@ public class InvokeSpecial implements TypedNode {
         this.isInterface = isInterface;
     }
 
-    public InvokeSpecial arg(TypedNode param) {
+    public Invoke arg(TypedNode param) {
         this.params.add(param);
-        return this;
-    }
-
-    public InvokeSpecial args(TypedNode... params) {
-        Collections.addAll(this.params, params);
         return this;
     }
 

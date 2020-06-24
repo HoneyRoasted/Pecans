@@ -28,7 +28,7 @@ import honeyroasted.pecans.node.instruction.util.LazyTypedNode;
 import honeyroasted.pecans.node.instruction.Return;
 import honeyroasted.pecans.node.instruction.TypedNode;
 import honeyroasted.pecans.node.instruction.block.If;
-import honeyroasted.pecans.node.instruction.invocation.Invoke;
+import honeyroasted.pecans.node.instruction.invocation.InvokeSimple;
 import honeyroasted.pecans.node.instruction.invocation.InvokeSpecial;
 import honeyroasted.pecans.node.instruction.util.SkipPreprocTypedNode;
 import honeyroasted.pecans.node.instruction.variable.scope.DefVar;
@@ -59,7 +59,6 @@ import honeyroasted.pecans.node.instruction.variable.GetStatic;
 import honeyroasted.pecans.node.instruction.variable.PutField;
 import honeyroasted.pecans.node.instruction.variable.PutLocal;
 import honeyroasted.pecans.node.instruction.variable.PutStatic;
-import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
@@ -188,16 +187,16 @@ public interface Nodes {
         return new InvokeStatic(target, new ArrayList<>(), name, signature, isInterface);
     }
 
-    static Invoke invokeVirtual(TypedNode target, String name, MethodSignature signature) {
-        return new Invoke(Opcodes.INVOKEVIRTUAL, target, new ArrayList<>(), name, signature, false);
+    static InvokeSimple invokeVirtual(TypedNode target, String name, MethodSignature signature) {
+        return new InvokeSimple(Opcodes.INVOKEVIRTUAL, target, new ArrayList<>(), name, signature, false);
     }
 
-    static Invoke invokeVirtual(TypedNode target, String name, MethodSignature signature, boolean isInterface) {
-        return new Invoke(Opcodes.INVOKEVIRTUAL, target, new ArrayList<>(), name, signature, isInterface);
+    static InvokeSimple invokeVirtual(TypedNode target, String name, MethodSignature signature, boolean isInterface) {
+        return new InvokeSimple(Opcodes.INVOKEVIRTUAL, target, new ArrayList<>(), name, signature, isInterface);
     }
 
-    static Invoke invokeInterface(TypedNode target, String name, MethodSignature signature) {
-        return new Invoke(Opcodes.INVOKEINTERFACE, target, new ArrayList<>(), name, signature, true);
+    static InvokeSimple invokeInterface(TypedNode target, String name, MethodSignature signature) {
+        return new InvokeSimple(Opcodes.INVOKEINTERFACE, target, new ArrayList<>(), name, signature, true);
     }
 
     static If ifBlock(TypedNode condition, Node ifTrue) {

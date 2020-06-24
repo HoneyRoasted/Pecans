@@ -10,7 +10,7 @@ import org.objectweb.asm.commons.InstructionAdapter;
 import java.util.Collection;
 import java.util.Collections;
 
-public class New implements TypedNode {
+public class New implements Invoke {
     private TypeInformal type;
     private Collection<TypedNode> params;
 
@@ -22,13 +22,8 @@ public class New implements TypedNode {
         this.signature = signature;
     }
 
-    public New arg(TypedNode param) {
+    public Invoke arg(TypedNode param) {
         this.params.add(param);
-        return this;
-    }
-
-    public New args(TypedNode... params) {
-        Collections.addAll(this.params, params);
         return this;
     }
 
