@@ -303,15 +303,16 @@ public interface Nodes {
             node.preprocess(context);
             TypedNode val = new SkipPreprocTypedNode(node);
 
-
-            if (!target.isPrimitive() && !val.type(context).isPrimitive()) {
-                return checkcast(target, val);
-            } else if (target.isPrimitive() && val.type(context).isPrimitive()) {
-                return primcast(target, val);
-            } else if (target.isPrimitive()) {
-                return convert(target, unbox(val));
-            } else if (val.type(context).isPrimitive()) {
-                return convert(target, box(val));
+            if (!target.equals(node.type(context))) {
+                if (!target.isPrimitive() && !val.type(context).isPrimitive()) {
+                    return checkcast(target, val);
+                } else if (target.isPrimitive() && val.type(context).isPrimitive()) {
+                    return primcast(target, val);
+                } else if (target.isPrimitive()) {
+                    return convert(target, unbox(val));
+                } else if (val.type(context).isPrimitive()) {
+                    return convert(target, box(val));
+                }
             }
 
             return val;
