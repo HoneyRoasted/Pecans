@@ -2,6 +2,9 @@ package honeyroasted.pecans.node;
 
 import honeyroasted.pecans.node.instruction.Composition;
 import honeyroasted.pecans.node.instruction.Throw;
+import honeyroasted.pecans.node.instruction.array.ArrayGet;
+import honeyroasted.pecans.node.instruction.array.ArraySet;
+import honeyroasted.pecans.node.instruction.array.NewArray;
 import honeyroasted.pecans.node.instruction.block.Break;
 import honeyroasted.pecans.node.instruction.block.Continue;
 import honeyroasted.pecans.node.instruction.block.Goto;
@@ -64,6 +67,7 @@ import org.objectweb.asm.Type;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public interface Nodes {
 
@@ -413,6 +417,22 @@ public interface Nodes {
 
     static Throw throwEx(TypedNode ex) {
         return new Throw(ex);
+    }
+
+    static NewArray newArray(TypeInformal elementType, List<TypedNode> elements) {
+        return new NewArray(elementType, elements, constant(elements.size()));
+    }
+
+    static NewArray newArray(TypeInformal elementType, TypedNode size) {
+        return new NewArray(elementType, null, size);
+    }
+
+    static ArraySet arraySet(TypedNode array, TypedNode index, TypedNode value) {
+        return new ArraySet(array, index, value);
+    }
+
+    static ArrayGet arrayGet(TypedNode array, TypedNode index) {
+        return new ArrayGet(array, index);
     }
 
 }
