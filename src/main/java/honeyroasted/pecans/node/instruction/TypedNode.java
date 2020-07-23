@@ -16,10 +16,13 @@ public interface TypedNode extends Node {
             public void accept(InstructionAdapter adapter, Context context) {
                 self.accept(adapter, context);
 
-                if (self.type(context).equals(Types.LONG) || self.type(context).equals(Types.DOUBLE)) {
-                    adapter.pop2();
-                } else {
-                    adapter.pop();
+
+                if (!self.type(context).equals(Types.VOID)) {
+                    if (self.type(context).equals(Types.LONG) || self.type(context).equals(Types.DOUBLE)) {
+                        adapter.pop2();
+                    } else {
+                        adapter.pop();
+                    }
                 }
             }
 

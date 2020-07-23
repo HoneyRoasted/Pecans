@@ -35,6 +35,7 @@ import honeyroasted.pecans.node.instruction.TypedNode;
 import honeyroasted.pecans.node.instruction.block.If;
 import honeyroasted.pecans.node.instruction.invocation.InvokeSimple;
 import honeyroasted.pecans.node.instruction.invocation.InvokeSpecial;
+import honeyroasted.pecans.node.instruction.util.NoopNode;
 import honeyroasted.pecans.node.instruction.util.SkipPreprocTypedNode;
 import honeyroasted.pecans.node.instruction.variable.scope.DefVar;
 import honeyroasted.pecans.node.instruction.variable.scope.GetVar;
@@ -439,6 +440,10 @@ public interface Nodes {
 
     static ArrayGet arrayGet(TypedNode array, TypedNode index) {
         return new ArrayGet(array, index);
+    }
+
+    static Node noop() {
+        return new NoopNode();
     }
 
 }
