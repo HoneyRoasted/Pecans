@@ -47,4 +47,14 @@ public class Equal implements ComparisonOperator {
         adapter.ificmpne(label);
     }
 
+    @Override
+    public void visitObjCompare(InstructionAdapter adapter, Label label) {
+        adapter.ifacmpeq(label);
+    }
+
+    @Override
+    public void visitInverseObjCompare(InstructionAdapter adapter, Label label) {
+        adapter.ifacmpne(label);
+    }
+
 }

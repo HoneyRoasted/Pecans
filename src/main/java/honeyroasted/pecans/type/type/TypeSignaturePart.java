@@ -112,4 +112,10 @@ public interface TypeSignaturePart {
         return this instanceof TypeWild;
     }
 
+    /**
+     * @return True if this is not a primitive type, false otherwise.
+     */
+    default boolean isObject() {
+        return !isPrimitive();
+    }
 }

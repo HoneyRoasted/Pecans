@@ -29,4 +29,12 @@ public interface ComparisonOperator {
 
     void visitInverseIntCompare(InstructionAdapter adapter, Label label);
 
+    default void visitObjCompare(InstructionAdapter adapter, Label label) {
+        throw new UnsupportedOperationException("Cannot compare objects with this operator");
+    }
+
+    default void visitInverseObjCompare(InstructionAdapter adapter, Label label) {
+        throw new UnsupportedOperationException("Cannot compare objects with this operator");
+    }
+
 }

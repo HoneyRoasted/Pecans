@@ -24,6 +24,8 @@ import honeyroasted.pecans.node.instruction.operator.Subtract;
 import honeyroasted.pecans.node.instruction.operator.Ternary;
 import honeyroasted.pecans.node.instruction.operator.UnsignedRightShift;
 import honeyroasted.pecans.node.instruction.operator.bool.And;
+import honeyroasted.pecans.node.instruction.operator.bool.Equal;
+import honeyroasted.pecans.node.instruction.operator.bool.EqualNull;
 import honeyroasted.pecans.node.instruction.operator.bool.InstanceOf;
 import honeyroasted.pecans.node.instruction.operator.bool.Not;
 import honeyroasted.pecans.node.instruction.operator.bool.Or;
@@ -409,6 +411,10 @@ public interface Nodes {
 
     static TypedNode bnegate(TypedNode val) {
         return bxor(val, constant(-1));
+    }
+
+    static TypedNode equalsNull(TypedNode val) {
+        return new EqualNull(val);
     }
 
     static TypedNode ternary(TypedNode cond, TypedNode ifTrue, TypedNode ifFalse) {

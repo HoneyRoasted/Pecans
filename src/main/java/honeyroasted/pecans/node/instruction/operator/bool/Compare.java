@@ -21,7 +21,7 @@ public class Compare extends BinaryOperator implements BooleanOperator {
 
     @Override
     public void acceptTrueJump(InstructionAdapter adapter, Context context, Label ifTrue) {
-        TypeInformal wide = this.left.type(context);
+        TypeInformal wide = Types.widest(this.left.type(context), this.right.type(context));
 
         boolean compare = wide.equals(Types.DOUBLE) ||
                 wide.equals(Types.FLOAT) ||
@@ -40,14 +40,16 @@ public class Compare extends BinaryOperator implements BooleanOperator {
             }
 
             this.operator.visitCompareJump(adapter, ifTrue);
-        } else {
+        } else if (wide.isObject()) {
+            this.operator.visitObjCompare(adapter, ifTrue);
+        }  else {
             this.operator.visitIntCompare(adapter, ifTrue);
         }
     }
 
     @Override
     public void acceptFalseJump(InstructionAdapter adapter, Context context, Label ifFalse) {
-        TypeInformal wide = this.left.type(context);
+        TypeInformal wide = Types.widest(this.left.type(context), this.right.type(context));
 
         boolean compare = wide.equals(Types.DOUBLE) ||
                 wide.equals(Types.FLOAT) ||
@@ -66,6 +68,8 @@ public class Compare extends BinaryOperator implements BooleanOperator {
             }
 
             this.operator.visitInverseCompareJump(adapter, ifFalse);
+        } else if (wide.isObject()) {
+            this.operator.visitInverseObjCompare(adapter, ifFalse);
         } else {
             this.operator.visitInverseIntCompare(adapter, ifFalse);
         }
@@ -73,7 +77,7 @@ public class Compare extends BinaryOperator implements BooleanOperator {
 
     @Override
     public void acceptJump(InstructionAdapter adapter, Context context, Label ifTrue, Label ifFalse) {
-        TypeInformal wide = this.left.type(context);
+        TypeInformal wide = Types.widest(this.left.type(context), this.right.type(context));
 
         boolean compare = wide.equals(Types.DOUBLE) ||
                 wide.equals(Types.FLOAT) ||
@@ -93,7 +97,10 @@ public class Compare extends BinaryOperator implements BooleanOperator {
 
             this.operator.visitCompareJump(adapter, ifTrue);
             adapter.goTo(ifFalse);
-        } else {
+        } else if (wide.isObject()) {
+            this.operator.visitObjCompare(adapter, ifTrue);
+            adapter.goTo(ifFalse);
+        }  else {
             this.operator.visitIntCompare(adapter, ifTrue);
             adapter.goTo(ifFalse);
         }
@@ -101,7 +108,7 @@ public class Compare extends BinaryOperator implements BooleanOperator {
 
     @Override
     public void accept(InstructionAdapter adapter, Context context) {
-        TypeInformal wide = this.left.type(context);
+        TypeInformal wide = Types.widest(this.left.type(context), this.right.type(context));
 
         boolean compare = wide.equals(Types.DOUBLE) ||
                 wide.equals(Types.FLOAT) ||
@@ -130,7 +137,11 @@ public class Compare extends BinaryOperator implements BooleanOperator {
         } else {
             Label a = new Label();
             Label b = new Label();
-            this.operator.visitInverseIntCompare(adapter, a);
+             if (wide.isObject()) {
+                this.operator.visitInverseObjCompare(adapter, a);
+            } else {
+                 this.operator.visitInverseIntCompare(adapter, a);
+             }
             Nodes.constant(true).accept(adapter, context);
             adapter.goTo(b);
             adapter.mark(a);
