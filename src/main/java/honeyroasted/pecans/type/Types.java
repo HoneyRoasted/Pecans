@@ -12,6 +12,7 @@ import honeyroasted.pecans.type.type.TypeNull;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -173,6 +174,14 @@ public interface Types extends Opcodes {
         MethodSignature sig = MethodSignature.of(ret);
         for (TypeInformal type : params) {
             sig.addParameter(type);
+        }
+        return sig;
+    }
+
+    static MethodSignature methodSignature(Method method) {
+        MethodSignature sig = methodSignature(type(method.getReturnType()));
+        for (Class<?> param : method.getParameterTypes()) {
+            sig.addParameter(type(param));
         }
         return sig;
     }
