@@ -94,7 +94,7 @@ public interface Types extends Opcodes {
         return a;
     }
 
-    static TypeInformal type(Type asmType) {
+    static TypeFill type(Type asmType) {
         if(asmType.getSort() == Type.ARRAY) {
             return array(type(asmType.getElementType()));
         }
@@ -102,11 +102,11 @@ public interface Types extends Opcodes {
         return new TypeFill(asmType);
     }
 
-    static TypeInformal type(Class cls) {
+    static TypeFill type(Class cls) {
         return type(Type.getType(cls));
     }
 
-    static TypeInformal type(String desc) {
+    static TypeFill type(String desc) {
         return type(Type.getType(desc));
     }
 

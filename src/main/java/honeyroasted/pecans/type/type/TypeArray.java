@@ -21,12 +21,14 @@
  */
 package honeyroasted.pecans.type.type;
 
+import org.objectweb.asm.Type;
+
 import java.util.Objects;
 
 /**
  * Represents an array type.
  */
-public class TypeArray implements TypeInformal, TypeSignaturePart {
+public class TypeArray extends TypeFill implements TypeInformal, TypeSignaturePart {
     private TypeInformal type;
     private String desc;
 
@@ -51,6 +53,7 @@ public class TypeArray implements TypeInformal, TypeSignaturePart {
      * @param type The element of this array.
      */
     public TypeArray(TypeInformal type) {
+        super(Type.getType("[" + type.writeDesc()));
         this.type = type;
         this.desc = "[" + type.writeDesc();
     }
@@ -58,7 +61,7 @@ public class TypeArray implements TypeInformal, TypeSignaturePart {
     /**
      * @return The direct element of this array (it may be another TypeArray).
      */
-    public TypeInformal getType() {
+    public TypeInformal directElement() {
         return this.type;
     }
 
@@ -67,7 +70,7 @@ public class TypeArray implements TypeInformal, TypeSignaturePart {
      *
      * @param type The new element
      */
-    public void setType(TypeInformal type) {
+    public void setDirectElement(TypeInformal type) {
         this.type = type;
     }
 

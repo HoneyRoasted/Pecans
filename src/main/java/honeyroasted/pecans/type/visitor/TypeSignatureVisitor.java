@@ -76,7 +76,7 @@ public class TypeSignatureVisitor extends SignatureVisitor implements Opcodes {
     public SignatureVisitor visitArrayType() {
         this.type = new TypeArray(new TypeFill(Type.getType(Object.class)));
         TypeInformal curr = this.type;
-        return logAndReturn(new TypeSignatureVisitor(f -> ((TypeArray) curr).setType(f)));
+        return logAndReturn(new TypeSignatureVisitor(f -> ((TypeArray) curr).setDirectElement(f)));
     }
 
     @Override
