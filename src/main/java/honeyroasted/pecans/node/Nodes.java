@@ -1,15 +1,31 @@
 package honeyroasted.pecans.node;
 
 import honeyroasted.pecans.node.instruction.Composition;
+import honeyroasted.pecans.node.instruction.Constant;
+import honeyroasted.pecans.node.instruction.Line;
+import honeyroasted.pecans.node.instruction.Node;
+import honeyroasted.pecans.node.instruction.Return;
+import honeyroasted.pecans.node.instruction.Sequence;
 import honeyroasted.pecans.node.instruction.Throw;
+import honeyroasted.pecans.node.instruction.TypedNode;
 import honeyroasted.pecans.node.instruction.array.ArrayGet;
 import honeyroasted.pecans.node.instruction.array.ArraySet;
 import honeyroasted.pecans.node.instruction.array.NewArray;
 import honeyroasted.pecans.node.instruction.block.Break;
 import honeyroasted.pecans.node.instruction.block.Continue;
+import honeyroasted.pecans.node.instruction.block.DoWhile;
+import honeyroasted.pecans.node.instruction.block.For;
 import honeyroasted.pecans.node.instruction.block.Goto;
+import honeyroasted.pecans.node.instruction.block.If;
 import honeyroasted.pecans.node.instruction.block.Mark;
 import honeyroasted.pecans.node.instruction.block.TryCatch;
+import honeyroasted.pecans.node.instruction.block.While;
+import honeyroasted.pecans.node.instruction.conversion.CheckCast;
+import honeyroasted.pecans.node.instruction.conversion.PrimitiveCast;
+import honeyroasted.pecans.node.instruction.invocation.InvokeSimple;
+import honeyroasted.pecans.node.instruction.invocation.InvokeSpecial;
+import honeyroasted.pecans.node.instruction.invocation.InvokeStatic;
+import honeyroasted.pecans.node.instruction.invocation.New;
 import honeyroasted.pecans.node.instruction.operator.Add;
 import honeyroasted.pecans.node.instruction.operator.BitwiseAnd;
 import honeyroasted.pecans.node.instruction.operator.BitwiseOr;
@@ -24,19 +40,21 @@ import honeyroasted.pecans.node.instruction.operator.Subtract;
 import honeyroasted.pecans.node.instruction.operator.Ternary;
 import honeyroasted.pecans.node.instruction.operator.UnsignedRightShift;
 import honeyroasted.pecans.node.instruction.operator.bool.And;
-import honeyroasted.pecans.node.instruction.operator.bool.Equal;
+import honeyroasted.pecans.node.instruction.operator.bool.Compare;
+import honeyroasted.pecans.node.instruction.operator.bool.ComparisonOperator;
 import honeyroasted.pecans.node.instruction.operator.bool.EqualNull;
 import honeyroasted.pecans.node.instruction.operator.bool.InstanceOf;
 import honeyroasted.pecans.node.instruction.operator.bool.Not;
 import honeyroasted.pecans.node.instruction.operator.bool.Or;
 import honeyroasted.pecans.node.instruction.util.LazyTypedNode;
-import honeyroasted.pecans.node.instruction.Return;
-import honeyroasted.pecans.node.instruction.TypedNode;
-import honeyroasted.pecans.node.instruction.block.If;
-import honeyroasted.pecans.node.instruction.invocation.InvokeSimple;
-import honeyroasted.pecans.node.instruction.invocation.InvokeSpecial;
 import honeyroasted.pecans.node.instruction.util.NoopNode;
 import honeyroasted.pecans.node.instruction.util.SkipPreprocTypedNode;
+import honeyroasted.pecans.node.instruction.variable.GetField;
+import honeyroasted.pecans.node.instruction.variable.GetLocal;
+import honeyroasted.pecans.node.instruction.variable.GetStatic;
+import honeyroasted.pecans.node.instruction.variable.PutField;
+import honeyroasted.pecans.node.instruction.variable.PutLocal;
+import honeyroasted.pecans.node.instruction.variable.PutStatic;
 import honeyroasted.pecans.node.instruction.variable.scope.DefVar;
 import honeyroasted.pecans.node.instruction.variable.scope.GetVar;
 import honeyroasted.pecans.node.instruction.variable.scope.Scope;
@@ -44,27 +62,7 @@ import honeyroasted.pecans.node.instruction.variable.scope.SetVar;
 import honeyroasted.pecans.type.ClassSignature;
 import honeyroasted.pecans.type.MethodSignature;
 import honeyroasted.pecans.type.Types;
-import honeyroasted.pecans.type.type.TypeFill;
 import honeyroasted.pecans.type.type.TypeInformal;
-import honeyroasted.pecans.node.instruction.Constant;
-import honeyroasted.pecans.node.instruction.Line;
-import honeyroasted.pecans.node.instruction.Node;
-import honeyroasted.pecans.node.instruction.Sequence;
-import honeyroasted.pecans.node.instruction.block.DoWhile;
-import honeyroasted.pecans.node.instruction.block.For;
-import honeyroasted.pecans.node.instruction.block.While;
-import honeyroasted.pecans.node.instruction.conversion.CheckCast;
-import honeyroasted.pecans.node.instruction.conversion.PrimitiveCast;
-import honeyroasted.pecans.node.instruction.invocation.InvokeStatic;
-import honeyroasted.pecans.node.instruction.invocation.New;
-import honeyroasted.pecans.node.instruction.operator.bool.Compare;
-import honeyroasted.pecans.node.instruction.operator.bool.ComparisonOperator;
-import honeyroasted.pecans.node.instruction.variable.GetField;
-import honeyroasted.pecans.node.instruction.variable.GetLocal;
-import honeyroasted.pecans.node.instruction.variable.GetStatic;
-import honeyroasted.pecans.node.instruction.variable.PutField;
-import honeyroasted.pecans.node.instruction.variable.PutLocal;
-import honeyroasted.pecans.node.instruction.variable.PutStatic;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
@@ -90,11 +88,11 @@ public interface Nodes {
         return MethodNode.of(modifiers, name, signature, body);
     }
 
-    static AnnotationNode annotation(TypeFill type) {
+    static AnnotationNode annotation(TypeInformal type) {
         return AnnotationNode.of(type);
     }
 
-    static AnnotationNode annotation(TypeFill type, boolean visible) {
+    static AnnotationNode annotation(TypeInformal type, boolean visible) {
         return AnnotationNode.of(type, visible);
     }
 
@@ -154,7 +152,7 @@ public interface Nodes {
         return new GetField(target, name, type);
     }
 
-    static GetStatic get(TypeFill target, String name, TypeInformal type) {
+    static GetStatic get(TypeInformal target, String name, TypeInformal type) {
         return new GetStatic(target, name, type);
     }
 
@@ -166,7 +164,7 @@ public interface Nodes {
         return new PutField(target, name, value);
     }
 
-    static PutStatic set(TypeFill target, String name, TypedNode value) {
+    static PutStatic set(TypeInformal target, String name, TypedNode value) {
         return new PutStatic(target, name, value);
     }
 
@@ -178,19 +176,19 @@ public interface Nodes {
         return new Line(line);
     }
 
-    static InvokeSpecial invokeSpecial(TypeFill owner, TypedNode target, String name, MethodSignature signature) {
+    static InvokeSpecial invokeSpecial(TypeInformal owner, TypedNode target, String name, MethodSignature signature) {
         return new InvokeSpecial(owner, target, new ArrayList<>(), name, signature, false);
     }
 
-    static InvokeSpecial invokeSpecial(TypeFill owner, TypedNode target, String name, MethodSignature signature, boolean isInterface) {
+    static InvokeSpecial invokeSpecial(TypeInformal owner, TypedNode target, String name, MethodSignature signature, boolean isInterface) {
         return new InvokeSpecial(owner, target, new ArrayList<>(), name, signature, isInterface);
     }
 
-    static InvokeStatic invokeStatic(TypeFill target, String name, MethodSignature signature) {
+    static InvokeStatic invokeStatic(TypeInformal target, String name, MethodSignature signature) {
         return new InvokeStatic(target, new ArrayList<>(), name, signature, false);
     }
 
-    static InvokeStatic invokeStatic(TypeFill target, String name, MethodSignature signature, boolean isInterface) {
+    static InvokeStatic invokeStatic(TypeInformal target, String name, MethodSignature signature, boolean isInterface) {
         return new InvokeStatic(target, new ArrayList<>(), name, signature, isInterface);
     }
 

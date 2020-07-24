@@ -7,11 +7,11 @@ import honeyroasted.pecans.type.type.TypeInformal;
 import org.objectweb.asm.commons.InstructionAdapter;
 
 public class GetStatic implements TypedNode {
-    private TypeFill target;
+    private TypeInformal target;
     private String name;
     private TypeInformal type;
 
-    public GetStatic(TypeFill target, String name, TypeInformal type) {
+    public GetStatic(TypeInformal target, String name, TypeInformal type) {
         this.target = target;
         this.name = name;
         this.type = type;

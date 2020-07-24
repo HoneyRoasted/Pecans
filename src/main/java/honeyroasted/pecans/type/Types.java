@@ -94,15 +94,19 @@ public interface Types extends Opcodes {
         return a;
     }
 
-    static TypeFill type(Type asmType) {
+    static TypeInformal type(Type asmType) {
+        if(asmType.getSort() == Type.ARRAY) {
+            return array(type(asmType.getElementType()));
+        }
+
         return new TypeFill(asmType);
     }
 
-    static TypeFill type(Class cls) {
+    static TypeInformal type(Class cls) {
         return type(Type.getType(cls));
     }
 
-    static TypeFill type(String desc) {
+    static TypeInformal type(String desc) {
         return type(Type.getType(desc));
     }
 

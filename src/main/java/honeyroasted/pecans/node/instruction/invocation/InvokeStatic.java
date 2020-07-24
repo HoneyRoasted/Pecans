@@ -11,14 +11,14 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class InvokeStatic implements Invoke {
-    private TypeFill target;
+    private TypeInformal target;
     private Collection<TypedNode> params;
 
     private String name;
     private MethodSignature signature;
     private boolean isInterface;
 
-    public InvokeStatic(TypeFill target, Collection<TypedNode> params, String name, MethodSignature signature, boolean isInterface) {
+    public InvokeStatic(TypeInformal target, Collection<TypedNode> params, String name, MethodSignature signature, boolean isInterface) {
         this.target = target;
         this.params = params;
         this.name = name;

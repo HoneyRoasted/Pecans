@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class InvokeSpecial implements Invoke {
-    private TypeFill owner;
+    private TypeInformal owner;
     private TypedNode target;
     private Collection<TypedNode> params;
 
@@ -19,7 +19,7 @@ public class InvokeSpecial implements Invoke {
     private MethodSignature signature;
     private boolean isInterface;
 
-    public InvokeSpecial(TypeFill owner, TypedNode target, Collection<TypedNode> params, String name, MethodSignature signature, boolean isInterface) {
+    public InvokeSpecial(TypeInformal owner, TypedNode target, Collection<TypedNode> params, String name, MethodSignature signature, boolean isInterface) {
         this.owner = owner;
         this.target = target;
         this.params = params;

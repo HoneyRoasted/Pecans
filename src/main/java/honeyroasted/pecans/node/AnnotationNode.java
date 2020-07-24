@@ -1,6 +1,7 @@
 package honeyroasted.pecans.node;
 
 import honeyroasted.pecans.type.type.TypeFill;
+import honeyroasted.pecans.type.type.TypeInformal;
 import org.objectweb.asm.AnnotationVisitor;
 
 import java.lang.reflect.Array;
@@ -9,22 +10,22 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class AnnotationNode {
-    private TypeFill annotation;
+    private TypeInformal annotation;
     private boolean visible;
     private Map<String, Object> vals;
     private Consumer<AnnotationVisitor> onAccept = v -> {};
 
-    public AnnotationNode(TypeFill annotation, boolean visible) {
+    public AnnotationNode(TypeInformal annotation, boolean visible) {
         this.annotation = annotation;
         this.visible = visible;
         this.vals = new LinkedHashMap<>();
     }
 
-    public static AnnotationNode of(TypeFill annotation) {
+    public static AnnotationNode of(TypeInformal annotation) {
         return new AnnotationNode(annotation, true);
     }
 
-    public static AnnotationNode of(TypeFill annotation, boolean visible) {
+    public static AnnotationNode of(TypeInformal annotation, boolean visible) {
         return new AnnotationNode(annotation, visible);
     }
 
@@ -37,7 +38,7 @@ public class AnnotationNode {
         return visible;
     }
 
-    public TypeFill getAnnotation() {
+    public TypeInformal getAnnotation() {
         return annotation;
     }
 

@@ -4,14 +4,15 @@ import honeyroasted.pecans.node.Context;
 import honeyroasted.pecans.node.instruction.Node;
 import honeyroasted.pecans.node.instruction.TypedNode;
 import honeyroasted.pecans.type.type.TypeFill;
+import honeyroasted.pecans.type.type.TypeInformal;
 import org.objectweb.asm.commons.InstructionAdapter;
 
 public class PutStatic implements Node {
-    private TypeFill target;
+    private TypeInformal target;
     private String name;
     private TypedNode value;
 
-    public PutStatic(TypeFill target, String name, TypedNode value) {
+    public PutStatic(TypeInformal target, String name, TypedNode value) {
         this.target = target;
         this.name = name;
         this.value = value;
