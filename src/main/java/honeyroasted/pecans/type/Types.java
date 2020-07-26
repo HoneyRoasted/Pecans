@@ -49,7 +49,7 @@ public interface Types extends Opcodes {
 
     TypeInformal VOID = type(void.class);
 
-    Map<TypeInformal, TypeInformal> PRIMITIVE_TO_BOX = Collections.unmodifiableMap(new LinkedHashMap<>() {{
+    Map<TypeInformal, TypeInformal> PRIMITIVE_TO_BOX = Collections.unmodifiableMap(new LinkedHashMap<TypeInformal, TypeInformal>() {{
         put(BOOLEAN, BOOLEAN_BOX);
         put(BYTE, BYTE_BOX);
         put(SHORT, SHORT_BOX);
@@ -60,7 +60,7 @@ public interface Types extends Opcodes {
         put(CHAR, CHAR_BOX);
     }});
 
-    Map<TypeInformal, TypeInformal> BOX_TO_PRIMITIVE = Collections.unmodifiableMap(new LinkedHashMap<>() {{
+    Map<TypeInformal, TypeInformal> BOX_TO_PRIMITIVE = Collections.unmodifiableMap(new LinkedHashMap<TypeInformal, TypeInformal>() {{
         put(BOOLEAN_BOX, BOOLEAN);
         put(BYTE_BOX, BYTE);
         put(SHORT_BOX, SHORT);

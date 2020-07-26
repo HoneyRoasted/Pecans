@@ -1,4 +1,4 @@
-// class version 58.0 (58)
+// class version 52.0 (52)
 // access flags 0x1
 // signature Ljava/lang/Object;
 // declaration: Generated

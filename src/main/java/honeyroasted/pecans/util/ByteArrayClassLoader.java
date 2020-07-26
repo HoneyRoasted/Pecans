@@ -2,10 +2,6 @@ package honeyroasted.pecans.util;
 
 public class ByteArrayClassLoader extends ClassLoader {
 
-    public ByteArrayClassLoader(String name, ClassLoader parent) {
-        super(name, parent);
-    }
-
     public ByteArrayClassLoader(ClassLoader parent) {
         super(parent);
     }

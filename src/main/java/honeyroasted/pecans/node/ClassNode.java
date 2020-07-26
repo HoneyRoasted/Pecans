@@ -61,7 +61,7 @@ public class ClassNode implements Opcodes {
     }
 
     public void accept(ClassVisitor visitor) {
-        visitor.visit(V14, this.modifiers, this.signature.writeInternalName(), this.signature.write(), this.signature.getSuperclass().writeInternalName(), this.signature.getInterfaces().stream().map(TypeSignaturePart::writeInternalName).toArray(String[]::new));
+        visitor.visit(V1_8, this.modifiers, this.signature.writeInternalName(), this.signature.write(), this.signature.getSuperclass().writeInternalName(), this.signature.getInterfaces().stream().map(TypeSignaturePart::writeInternalName).toArray(String[]::new));
 
         for (AnnotationNode annotation : annotations) {
             annotation.accept(visitor.visitAnnotation(annotation.getAnnotation().writeDesc(), annotation.isVisible()));
