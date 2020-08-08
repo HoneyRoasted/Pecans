@@ -8,12 +8,14 @@ version '0.0.0'
 repositories {
     mavenCentral()
     jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     implementation(
             "org.ow2.asm:asm:8.0.1",
-            "org.ow2.asm:asm-commons:8.0.1")
+            "org.ow2.asm:asm-commons:8.0.1",
+            "com.github.HoneyRoasted:JavaType:526279a70c")
 
     testImplementation("org.ow2.asm:asm-util:8.0.1")
 }

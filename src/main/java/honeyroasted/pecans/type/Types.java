@@ -1,10 +1,15 @@
 package honeyroasted.pecans.type;
 
+import honeyroasted.javatype.ArrayType;
+import honeyroasted.javatype.GenericType;
+import honeyroasted.javatype.JavaType;
+import honeyroasted.javatype.VariableType;
 import honeyroasted.pecans.type.type.TypeArray;
 import honeyroasted.pecans.type.type.TypeFill;
 import honeyroasted.pecans.type.type.TypeInformal;
 import honeyroasted.pecans.type.type.TypeInner;
 import honeyroasted.pecans.type.type.TypeParameterized;
+import honeyroasted.pecans.type.type.TypeSignaturePart;
 import honeyroasted.pecans.type.type.TypeVar;
 import honeyroasted.pecans.type.type.TypeVarRef;
 import honeyroasted.pecans.type.type.TypeWild;
@@ -100,6 +105,57 @@ public interface Types extends Opcodes {
         }
 
         return new TypeFill(asmType);
+    }
+
+    static TypeSignaturePart type(VariableType type) {
+        if (type.getName().equals("?")) {
+            return new TypeWild(type.getUpper().isEmpty() ? OBJECT : type(type.getUpper().get(0)),
+                    type.getLower().isEmpty() ? null : type(type.getLower().get(0)));
+        } else {
+            TypeVar var = new TypeVar(type.getName());
+            for (JavaType bound : type.getUpper()) {
+                if (bound.getType().isInterface()) {
+                    var.addInterBound(type(bound));
+                } else {
+                    var.setClassBound(type(bound));
+                }
+            }
+            return var;
+        }
+    }
+
+    static TypeArray type(ArrayType type) {
+        return array(type(type.getAbsoluteComponent()), type.getDimensions());
+    }
+
+    static TypeFill type(GenericType type) {
+        TypeFill fill = type(type.getType());
+        for (JavaType generic : type.getGenerics()) {
+            fill.addPart(type(generic));
+        }
+        return fill;
+    }
+
+    static TypeInformal type(JavaType type) {
+        if (type.isVariable()) {
+            return new TypeVarRef(type.getName());
+        } else if (type.isArray()) {
+            return type((ArrayType) type);
+        } else if (type.isGeneric()) {
+            return type((GenericType) type);
+        } else {
+            throw new IllegalArgumentException("Unknown type: " + type);
+        }
+    }
+
+    static TypeParameterized parameterized(GenericType type) {
+        TypeParameterized parameterized = parameterized(type.getType());
+        for (JavaType param : type.getGenerics()) {
+            if (param.isVariable()) {
+                parameterized.addParameter((TypeVar) type((VariableType) param));
+            }
+        }
+        return parameterized;
     }
 
     static TypeFill type(Class cls) {
