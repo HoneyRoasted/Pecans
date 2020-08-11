@@ -302,22 +302,20 @@ public interface Nodes {
             return invokeVirtual(new SkipPreprocTypedNode(val), Type.getType(prim.writeDesc()).getClassName() + "Value", Types.methodSignature(prim));
         });
     }
-    
+
     static TypedNode convert(TypeInformal target, TypedNode node) {
         return new LazyTypedNode(context -> {
             node.preprocess(context);
             TypedNode val = new SkipPreprocTypedNode(node);
 
-            if (!target.equals(node.type(context))) {
-                if (!target.isPrimitive() && !val.type(context).isPrimitive()) {
-                    return checkcast(target, val);
-                } else if (target.isPrimitive() && val.type(context).isPrimitive()) {
-                    return primcast(target, val);
-                } else if (target.isPrimitive()) {
-                    return convert(target, unbox(val));
-                } else if (val.type(context).isPrimitive()) {
-                    return convert(target, box(val));
-                }
+            if (!target.isPrimitive() && !val.type(context).isPrimitive()) {
+                return checkcast(target, val);
+            } else if (target.isPrimitive() && val.type(context).isPrimitive()) {
+                return primcast(target, val);
+            } else if (target.isPrimitive()) {
+                return convert(target, unbox(val));
+            } else if (val.type(context).isPrimitive()) {
+                return convert(target, box(val));
             }
 
             return val;
