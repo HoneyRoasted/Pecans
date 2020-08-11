@@ -15,7 +15,7 @@ dependencies {
     implementation(
             "org.ow2.asm:asm:8.0.1",
             "org.ow2.asm:asm-commons:8.0.1",
-            "com.github.HoneyRoasted:JavaType:9fe00ce86a")
+            "com.github.HoneyRoasted:JavaType:master-SNAPSHOT")
 
     testImplementation("org.ow2.asm:asm-util:8.0.1")
 }
