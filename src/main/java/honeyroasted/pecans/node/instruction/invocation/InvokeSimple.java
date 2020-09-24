@@ -4,6 +4,7 @@ import honeyroasted.pecans.node.Context;
 import honeyroasted.pecans.type.MethodSignature;
 import honeyroasted.pecans.type.type.TypeInformal;
 import honeyroasted.pecans.node.instruction.TypedNode;
+import jdk.internal.org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.InstructionAdapter;
 
 import java.util.Collection;
@@ -26,6 +27,10 @@ public class InvokeSimple implements Invoke {
         this.name = name;
         this.signature = signature;
         this.isInterface = isInterface;
+
+        if (isInterface) {
+            this.opcode = Opcodes.INVOKEINTERFACE;
+        }
     }
 
     public Invoke arg(TypedNode param) {
